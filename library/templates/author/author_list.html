@@ -1,0 +1,30 @@
+<h1>Authors</h1>
+
+{% if messages %}
+<ul>
+  {% for message in messages %}
+  <li>{{ message }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Surname</th>
+    <th>Patronymic</th>
+    <th>Actions</th>
+  </tr>
+  {% for author in authors %}
+  <tr>
+    <td>{{ author.name }}</td>
+    <td>{{ author.surname }}</td>
+    <td>{{ author.patronymic }}</td>
+    <td>
+      <a href="{% url 'delete_author' author.id %}">Delete</a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+<a href="{% url 'add_author' %}">Add New Author</a>

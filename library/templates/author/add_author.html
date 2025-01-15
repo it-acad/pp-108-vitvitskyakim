@@ -1,0 +1,28 @@
+<form method="POST">
+  {% csrf_token %}
+  <label for="name">Name:</label>
+  <input type="text" name="name" id="name" required /><br />
+
+  <label for="surname">Surname:</label>
+  <input type="text" name="surname" id="surname" required /><br />
+
+  <label for="patronymic">Patronymic:</label>
+  <input type="text" name="patronymic" id="patronymic" required /><br />
+
+  <h3>Book Information</h3>
+
+  <label for="book_name">Book Name:</label>
+  <input type="text" name="book_name" id="book_name" /><br />
+
+  <label for="book_description">Book Description:</label>
+  <input
+    type="text"
+    name="book_description"
+    id="book_description"
+  /><br />
+
+  <label for="book_count">Book Count:</label>
+  <input type="number" name="book_count" id="book_count" value="10" /><br />
+
+  <button type="submit">Add Author and Book</button>
+</form>

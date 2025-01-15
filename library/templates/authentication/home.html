@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+  </head>
+  <body>
+    {% if user.is_authenticated %} {% if user.role == 1 %}
+    <h2>Hello, {{user.first_name}}</h2>
+    <a href="{% url 'logout' %}"><button>Log Out</button></a>
+    <a href="author/"><button>Author</button></a>
+    <a href="{% url 'user_list' %}"><button>User List</button></a>
+    {% elif user.role == 0 %}
+    <h2>Hello, {{user.first_name}}</h2>
+    <a href="{% url 'logout' %}"><button>Log Out</button></a>
+    {% endif %} {% else %}
+    <a href="{% url 'register' %}"><button>Register</button></a>
+    <a href="{% url 'login' %}"><button>Login</button></a>
+    {% endif %}
+  </body>
+</html>
