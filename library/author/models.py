@@ -26,8 +26,7 @@ class Author(models.Model):
         Magic method is redefined to show all information about Author.
         :return: author id, author name, author surname, author patronymic
         """
-        return f"\'id\': {self.pk}, \'name\': \'{self.name}\'," \
-               f" \'surname\': \'{self.surname}\', \'patronymic\': \'{self.patronymic}\'"
+        return f"{self.name} {self.surname} {self.patronymic}"
 
     def __repr__(self):
         """
@@ -127,3 +126,5 @@ class AuthorBook(models.Model):
     book = models.ForeignKey(book.models.Book, on_delete=models.CASCADE)
     class Meta:
         db_table = 'book_book_author'
+        verbose_name = "Author/Book"
+        verbose_name_plural = "Authors/Books"

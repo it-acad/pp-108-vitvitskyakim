@@ -1,22 +1,25 @@
 from django.contrib import admin
 from .models import Book
+from author.models import AuthorBook
+
+class AuthorBookInline(admin.TabularInline):
+    model = AuthorBook
+    extra = 1
 
 class BookAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'description', 'count', 'display_authors')
-    list_filter = ('name', 'count', 'authors')
-    search_fields = ('name', 'description', 'authors__name') 
-    filter_horizontal = ('authors',)
+
+    list_display = ('name', 'count')
+    search_fields = ('name',)
+
     fieldsets = (
-        ('Основна информация', {
-            'fields': ('name', 'description', 'count'),
+        ("Main Info", {
+            'fields': ('name', 'publication_year'),
         }),
-        ('Authors', {
-            'fields': ('authors',),
+        ("Changeable Info", {
+            'fields': ('release_date',),
         }),
     )
 
-    def display_authors(self, obj):
-        return ", ".join([author.name for author in obj.authors.all()])
-    display_authors.short_description = "Authors" 
+    inlines = [AuthorBookInline]
 
 admin.site.register(Book, BookAdmin)

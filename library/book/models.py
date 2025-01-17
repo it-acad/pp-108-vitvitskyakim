@@ -1,6 +1,5 @@
 from django.db import models
 
-
 class Book(models.Model):
     """
         This class represents an Author. \n
@@ -18,6 +17,8 @@ class Book(models.Model):
     name = models.CharField(blank=True, max_length=128)
     description = models.CharField(blank=True, max_length=256)
     count = models.IntegerField(default=10)
+    release_date = models.DateField(null=True, blank=True)
+    publication_year = models.IntegerField(null=True, blank=True)  
     id = models.AutoField(primary_key=True)
 
     def __str__(self):
@@ -25,7 +26,7 @@ class Book(models.Model):
         Magic method is redefined to show all information about Book.
         :return: book id, book name, book description, book count, book authors
         """
-        return f"'id': {self.id}, 'name': '{self.name}', 'description': '{self.description}', 'count': {self.count}, 'authors': {[author.id for author in self.authors.all()]}"
+        return f"{self.name.title()}"
 
     def __repr__(self):
         """
@@ -55,25 +56,15 @@ class Book(models.Model):
         return True
 
     @staticmethod
-    def create(name, description, count=10, authors=None):
-        """
-        param name: Describes name of the book
-        type name: str max_length=128
-        param description: Describes description of the book
-        type description: str
-        param count: Describes count of the book
-        type count: int default=10
-        param authors: list of Authors
-        type authors: list->Author
-        :return: a new book object which is also written into the DB
-        """
+    def create(name, description, count=10, authors=None, release_date=None, publication_year=None):
         if len(name) > 128:
             return None
-
         book = Book()
         book.name = name
         book.description = description
         book.count = count
+        book.release_date = release_date
+        book.publication_year = publication_year
         if (authors is not None):
             for elem in authors:
                 book.authors.add(elem)
@@ -93,7 +84,8 @@ class Book(models.Model):
         | }
         """
 
-    def update(self, name=None, description=None, count=None):
+    def update(self, name=None, description=None, count=None, release_date=None, publication_year=None):
+     
         """
         Updates book in the database with the specified parameters.\n
         param name: Describes name of the book
@@ -112,7 +104,12 @@ class Book(models.Model):
 
         if count is not None:
             self.count = count
-
+            
+        if release_date is not None:
+            self.release_date = release_date
+            
+        if publication_year is not None:
+            self.publication_year = publication_year
         self.save()
 
     def add_authors(self, authors):
